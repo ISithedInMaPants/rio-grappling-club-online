@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
+@theme {
+  --color-rgc-green: #00923f;
+  --color-rgc-green-hover: #007a34;
+  --color-rgc-green-light: #00b54e;
+  --color-rgc-green-glow: rgba(0, 146, 63, 0.25);
+  
+  --color-rgc-blue: #123984;
+  --color-rgc-blue-hover: #0e2e6b;
+  --color-rgc-blue-light: #1d52b8;
+  --color-rgc-blue-glow: rgba(18, 57, 132, 0.25);
+  
+  --color-rgc-gold: #e0b252;
+  --color-rgc-gold-hover: #c99e44;
+  --color-rgc-gold-glow: rgba(224, 178, 82, 0.25);
+
+  --color-rgc-canvas: #0d0d0e;
+  --color-rgc-card: #161619;
+  --color-rgc-elevated: #212126;
+  --color-rgc-elevated-hover: #292930;
+  
+  --color-rgc-border: #2b2b32;
+  --color-rgc-border-active: #454552;
+  
+  --color-rgc-muted: #9a9aa6;
+  --color-rgc-subtle: #6b6b78;
+  --color-rgc-text: #ededf4;
+
+  --color-belt-white: #f4f4f7;
+  --color-belt-blue: #2563eb;
+  --color-belt-purple: #9333ea;
+  --color-belt-brown: #854d0e;
+  --color-belt-black: #18181b;
+  --color-belt-red: #dc2626;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --background: #0d0d0e;
+  --foreground: #ededf4;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Mat Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0d0d0e;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b2b32;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #454552;
 }
