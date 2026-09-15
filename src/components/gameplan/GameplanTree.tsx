@@ -147,10 +147,14 @@ export const GameplanTree: React.FC<GameplanTreeProps> = ({
           {selectedNode.courseSlug && (
             <div className="mt-6 pt-4 border-t border-[#2b2b32]">
               <Link
-                href={`/courses/${selectedNode.courseSlug}`}
+                href={
+                  selectedNode.relatedLessonSlug
+                    ? `/courses/${selectedNode.courseSlug}/${selectedNode.relatedLessonSlug}`
+                    : `/courses/${selectedNode.courseSlug}`
+                }
                 className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#00923f] hover:bg-[#007a34] text-white text-xs font-semibold shadow-md transition-all"
               >
-                <span>Study Instructional in Course</span>
+                <span>Study Technique in Player</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
             </div>

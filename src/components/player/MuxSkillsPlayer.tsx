@@ -187,6 +187,12 @@ export const MuxSkillsPlayer: React.FC<MuxSkillsPlayerProps> = ({
           </div>
         )}
 
+        {/* Demo Asset Status Indicator */}
+        <div className="absolute bottom-3 left-3 bg-[#0d0d0e]/80 backdrop-blur-md border border-white/10 text-[#9a9aa6] text-[10px] font-mono px-2.5 py-1 rounded-md pointer-events-none z-20 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00923f] animate-pulse" />
+          <span>DEMO STREAM • Mux Test Asset</span>
+        </div>
+
         {/* Side Chapter Drawer for Quick Jumping */}
         {showChaptersDrawer && chapters.length > 0 && (
           <div className="absolute inset-y-0 right-0 w-80 bg-[#161619]/95 backdrop-blur-xl border-l border-[#2b2b32] p-4 flex flex-col z-30 shadow-2xl transition-all">

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DrillItem } from '@/types';
 import { CheckCircle2, Circle, Flame } from 'lucide-react';
 
@@ -17,16 +17,33 @@ export const DrillCard: React.FC<DrillCardProps> = ({
 }) => {
   const [completed, setCompleted] = useState(drill.completed || false);
 
+  // Read saved completion state from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(`rgc_drill_${drill.id}`);
+      if (saved !== null) {
+        setCompleted(saved === 'true');
+      }
+    } catch {
+      // Ignore in SSR/incognito
+    }
+  }, [drill.id]);
+
   const handleToggle = () => {
     const next = !completed;
     setCompleted(next);
+    try {
+      localStorage.setItem(`rgc_drill_${drill.id}`, String(next));
+    } catch {
+      // Ignore
+    }
     onToggleComplete?.(drill.id, next);
   };
 
   return (
     <div
       onClick={handleToggle}
-      className={`group cursor-pointer p-4 rounded-xl border transition-all duration-200 ${
+      className={`group cursor-pointer p-4 rounded-xl border transition-all duration-200 select-none ${
         completed
           ? 'bg-[#00923f]/10 border-[#00923f]/50'
           : 'bg-[#161619] hover:bg-[#212126] border-[#2b2b32] hover:border-[#454552]'
@@ -54,7 +71,7 @@ export const DrillCard: React.FC<DrillCardProps> = ({
             >
               {drill.title}
             </h4>
-            <div className="flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-[#212126] border border-[#2b2b32] text-[#e0b252] font-mono">
+            <div className="flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-[#212126] border border-[#2b2b32] text-[#e0b252] font-mono flex-shrink-0">
               <Flame className="w-3 h-3" />
               <span>{drill.recommendedReps}</span>
             </div>

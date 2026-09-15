@@ -7,6 +7,7 @@ import { KeyPointsCard } from '@/components/cards/KeyPointsCard';
 import { DrillCard } from '@/components/cards/DrillCard';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { LessonActionButtons } from '@/components/player/LessonActionButtons';
 import {
   ChevronLeft,
   ChevronRight,
@@ -90,19 +91,15 @@ export default async function LessonPlayerPage({ params }: LessonPlayerPageProps
                   </h1>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Button variant="secondary" size="sm">
-                    <Bookmark className="w-3.5 h-3.5 mr-1" /> Save
-                  </Button>
-                  {nextLesson && (
-                    <Link href={`/courses/${course.slug}/${nextLesson.slug}`}>
-                      <Button variant="primary" size="sm">
-                        <span>Next Technique</span>
-                        <ChevronRight className="w-3.5 h-3.5 ml-1" />
-                      </Button>
-                    </Link>
-                  )}
-                </div>
+                <LessonActionButtons
+                  lessonId={lesson.id}
+                  lessonTitle={lesson.title}
+                  nextLessonHref={
+                    nextLesson
+                      ? `/courses/${course.slug}/${nextLesson.slug}`
+                      : undefined
+                  }
+                />
               </div>
 
               <p className="text-xs sm:text-sm text-[#9a9aa6] leading-relaxed">
