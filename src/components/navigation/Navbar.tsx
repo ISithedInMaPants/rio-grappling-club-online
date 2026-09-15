@@ -20,10 +20,14 @@ import {
   Clock,
   ChevronDown,
   Bookmark,
+  LogOut,
+  LogIn,
 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
+  const { user, isAuthenticated, signOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -96,118 +100,125 @@ export const Navbar: React.FC = () => {
               </kbd>
             </button>
 
-            {/* Student Profile Popover Toggle */}
+            {/* Student Profile Popover or Sign In */}
             <div className="relative pl-2 border-l border-[#2b2b32]">
-              <button
-                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="flex items-center gap-2.5 p-1 rounded-xl hover:bg-[#161619] transition-colors cursor-pointer text-left focus:outline-none"
-              >
-                <div className="flex flex-col items-end">
-                  <span className="text-[11px] font-bold text-[#ededf4]">
-                    Alex Silva
-                  </span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-blue-400 flex items-center gap-0.5">
-                    <ShieldCheck className="w-2.5 h-2.5" /> Blue Belt • 2 Stripes
-                  </span>
-                </div>
-                <div className="relative w-8 h-8 rounded-full overflow-hidden border border-blue-500 bg-[#0d0d0e]">
-                  <Image
-                    src="/images/instructors/student-alex.png"
-                    alt="Alex Silva"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <ChevronDown className="w-3.5 h-3.5 text-[#6b6b78]" />
-              </button>
-
-              {/* Student Dropdown Menu */}
-              {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-72 bg-[#161619] border border-[#2b2b32] rounded-2xl shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95 duration-100">
-                  <div className="flex items-center gap-3 pb-3 border-b border-[#2b2b32]">
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden border border-blue-500 bg-[#0d0d0e]">
+              {isAuthenticated && user ? (
+                <>
+                  <button
+                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                    className="flex items-center gap-2.5 p-1 rounded-xl hover:bg-[#161619] transition-colors cursor-pointer text-left focus:outline-none"
+                  >
+                    <div className="flex flex-col items-end">
+                      <span className="text-[11px] font-bold text-[#ededf4]">
+                        {user.name}
+                      </span>
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-blue-400 flex items-center gap-0.5">
+                        <ShieldCheck className="w-2.5 h-2.5" /> {user.beltLevel.toUpperCase()} • {user.stripes} {user.stripes === 1 ? 'Stripe' : 'Stripes'}
+                      </span>
+                    </div>
+                    <div className="relative w-8 h-8 rounded-full overflow-hidden border border-blue-500 bg-[#0d0d0e]">
                       <Image
-                        src="/images/instructors/student-alex.png"
-                        alt="Alex Silva"
+                        src={user.avatarUrl || '/images/instructors/student-alex.png'}
+                        alt={user.name}
                         fill
                         className="object-cover"
                       />
                     </div>
-                    <div>
-                      <div className="text-xs font-bold text-white">Alex Silva</div>
-                      <div className="text-[10px] text-blue-400 font-semibold">
-                        Blue Belt • 2 Stripes
+                    <ChevronDown className="w-3.5 h-3.5 text-[#6b6b78]" />
+                  </button>
+
+                  {/* Student Dropdown Menu */}
+                  {userDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-72 bg-[#161619] border border-[#2b2b32] rounded-2xl shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95 duration-100">
+                      <div className="flex items-center gap-3 pb-3 border-b border-[#2b2b32]">
+                        <div className="relative w-10 h-10 rounded-full overflow-hidden border border-blue-500 bg-[#0d0d0e]">
+                          <Image
+                            src={user.avatarUrl || '/images/instructors/student-alex.png'}
+                            alt={user.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-white">{user.name}</div>
+                          <div className="text-[10px] text-blue-400 font-semibold">
+                            {user.beltLevel.toUpperCase()} Belt • {user.stripes} Stripes
+                          </div>
+                          <div className="text-[9px] text-[#9a9aa6]">
+                            {user.academyName}
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-[9px] text-[#9a9aa6]">
-                        RGC Wroclaw Affiliate
+
+                      {/* Mat Time Stats */}
+                      <div className="py-3 border-b border-[#2b2b32] grid grid-cols-2 gap-2 text-center">
+                        <div className="bg-[#212126] p-2 rounded-xl border border-[#2b2b32]/60">
+                          <div className="text-xs font-mono font-bold text-[#00b54e]">
+                            {user.matHours || 0} hrs
+                          </div>
+                          <div className="text-[9px] uppercase tracking-wider text-[#9a9aa6] mt-0.5 flex items-center justify-center gap-1">
+                            <Clock className="w-2.5 h-2.5" /> Mat Time
+                          </div>
+                        </div>
+                        <div className="bg-[#212126] p-2 rounded-xl border border-[#2b2b32]/60">
+                          <div className="text-xs font-mono font-bold text-[#e0b252]">2 Courses</div>
+                          <div className="text-[9px] uppercase tracking-wider text-[#9a9aa6] mt-0.5 flex items-center justify-center gap-1">
+                            <Award className="w-2.5 h-2.5" /> In Progress
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Active In-Progress Courses */}
+                      <div className="py-2.5 space-y-2">
+                        <div className="text-[10px] uppercase font-bold tracking-wider text-[#6b6b78]">
+                          Active Study Courses
+                        </div>
+                        <Link
+                          href="/courses/closed-guard-mastery"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="block p-2 rounded-lg bg-[#212126]/60 hover:bg-[#212126] transition-colors"
+                        >
+                          <div className="text-[11px] font-semibold text-[#ededf4] truncate">
+                            Foundations of Closed Guard
+                          </div>
+                          <div className="w-full bg-[#0d0d0e] h-1.5 rounded-full mt-1.5 overflow-hidden">
+                            <div className="bg-[#00923f] h-full w-3/5" />
+                          </div>
+                          <div className="text-[9px] text-[#9a9aa6] text-right mt-1 font-mono">
+                            60% completed
+                          </div>
+                        </Link>
+                      </div>
+
+                      <div className="pt-2 border-t border-[#2b2b32] space-y-1.5">
+                        <Link
+                          href="/courses"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="w-full flex items-center justify-center gap-1.5 py-1 text-xs text-[#00b54e] font-semibold hover:underline"
+                        >
+                          <Bookmark className="w-3 h-3" /> View Enrolled Courses
+                        </Link>
+                        <button
+                          onClick={() => {
+                            setUserDropdownOpen(false);
+                            signOut();
+                          }}
+                          className="w-full flex items-center justify-center gap-1.5 py-1.5 text-xs text-[#9a9aa6] hover:text-red-400 transition-colors font-medium border-t border-[#2b2b32]/40"
+                        >
+                          <LogOut className="w-3 h-3" /> Sign Out
+                        </button>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Mat Time Stats */}
-                  <div className="py-3 border-b border-[#2b2b32] grid grid-cols-2 gap-2 text-center">
-                    <div className="bg-[#212126] p-2 rounded-xl border border-[#2b2b32]/60">
-                      <div className="text-xs font-mono font-bold text-[#00b54e]">14.5 hrs</div>
-                      <div className="text-[9px] uppercase tracking-wider text-[#9a9aa6] mt-0.5 flex items-center justify-center gap-1">
-                        <Clock className="w-2.5 h-2.5" /> Mat Time
-                      </div>
-                    </div>
-                    <div className="bg-[#212126] p-2 rounded-xl border border-[#2b2b32]/60">
-                      <div className="text-xs font-mono font-bold text-[#e0b252]">2 Courses</div>
-                      <div className="text-[9px] uppercase tracking-wider text-[#9a9aa6] mt-0.5 flex items-center justify-center gap-1">
-                        <Award className="w-2.5 h-2.5" /> In Progress
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Active In-Progress Courses */}
-                  <div className="py-2.5 space-y-2">
-                    <div className="text-[10px] uppercase font-bold tracking-wider text-[#6b6b78]">
-                      Active Study Courses
-                    </div>
-                    <Link
-                      href="/courses/closed-guard-mastery"
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="block p-2 rounded-lg bg-[#212126]/60 hover:bg-[#212126] transition-colors"
-                    >
-                      <div className="text-[11px] font-semibold text-[#ededf4] truncate">
-                        Foundations of Closed Guard
-                      </div>
-                      <div className="w-full bg-[#0d0d0e] h-1.5 rounded-full mt-1.5 overflow-hidden">
-                        <div className="bg-[#00923f] h-full w-3/5" />
-                      </div>
-                      <div className="text-[9px] text-[#9a9aa6] text-right mt-1 font-mono">
-                        60% completed
-                      </div>
-                    </Link>
-
-                    <Link
-                      href="/courses/pressure-passing-blueprint"
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="block p-2 rounded-lg bg-[#212126]/60 hover:bg-[#212126] transition-colors"
-                    >
-                      <div className="text-[11px] font-semibold text-[#ededf4] truncate">
-                        Pressure Passing Blueprint
-                      </div>
-                      <div className="w-full bg-[#0d0d0e] h-1.5 rounded-full mt-1.5 overflow-hidden">
-                        <div className="bg-[#00923f] h-full w-1/4" />
-                      </div>
-                      <div className="text-[9px] text-[#9a9aa6] text-right mt-1 font-mono">
-                        25% completed
-                      </div>
-                    </Link>
-                  </div>
-
-                  <div className="pt-2 border-t border-[#2b2b32]">
-                    <Link
-                      href="/courses"
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="w-full flex items-center justify-center gap-1.5 py-1.5 text-xs text-[#00b54e] font-semibold hover:underline"
-                    >
-                      <Bookmark className="w-3 h-3" /> View All Enrolled Courses
-                    </Link>
-                  </div>
-                </div>
+                  )}
+                </>
+              ) : (
+                <Link
+                  href="/"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#00923f] hover:bg-[#007a34] text-white text-xs font-bold transition-all shadow-sm"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  <span>Portal Access</span>
+                </Link>
               )}
             </div>
           </div>
@@ -258,28 +269,39 @@ export const Navbar: React.FC = () => {
             })}
 
             <div className="pt-3 border-t border-[#2b2b32] flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="relative w-8 h-8 rounded-full overflow-hidden border border-blue-500 bg-[#0d0d0e]">
-                  <Image
-                    src="/images/instructors/student-alex.png"
-                    alt="Alex Silva"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-white">Alex Silva</div>
-                  <div className="text-[10px] text-blue-400 font-semibold">
-                    Blue Belt • 2 Stripes (RGC Member)
+              {isAuthenticated && user ? (
+                <div className="flex items-center gap-2.5">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-blue-500 bg-[#0d0d0e]">
+                    <Image
+                      src={user.avatarUrl || '/images/instructors/student-alex.png'}
+                      alt={user.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-white">{user.name}</div>
+                    <div className="text-[10px] text-blue-400 font-semibold">
+                      {user.beltLevel.toUpperCase()} Belt • {user.stripes} Stripes ({user.academyName})
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <Link
+                  href="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-xs text-[#00b54e] font-semibold flex items-center gap-1.5"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  <span>Portal Sign In / Register</span>
+                </Link>
+              )}
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   setSearchOpen(true);
                 }}
-                className="text-xs text-[#00b54e] font-semibold"
+                className="text-xs text-[#9a9aa6] hover:text-[#ededf4] font-semibold"
               >
                 Search
               </button>

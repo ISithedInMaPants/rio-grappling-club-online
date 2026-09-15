@@ -33,6 +33,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { AppProviders } from '@/components/providers/AppProviders';
+
 export default function RootLayout({
   children,
 }: {
@@ -44,9 +46,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
     >
       <body className="min-h-screen flex flex-col bg-[#0d0d0e] text-[#ededf4] font-sans selection:bg-[#00923f]/30 selection:text-white">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AppProviders>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AppProviders>
       </body>
     </html>
   );
