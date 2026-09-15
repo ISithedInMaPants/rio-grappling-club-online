@@ -72,7 +72,7 @@ export default async function LessonPlayerPage({ params }: LessonPlayerPageProps
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Video & Content Column (8 cols) */}
           <div className="lg:col-span-8 space-y-6">
-            {/* The Submeta-Style Skills Video Player */}
+            {/* The Skills Video Player */}
             <MuxSkillsPlayer
               title={lesson.title}
               playbackId={lesson.muxPlaybackId}

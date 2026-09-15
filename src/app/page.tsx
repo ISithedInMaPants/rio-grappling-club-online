@@ -42,7 +42,7 @@ export default async function HomePage() {
     },
     {
       q: 'What makes the video player unique for mat drilling?',
-      a: 'Just like Submeta, our player is engineered for grapplers on the mat. You can set any chapter or technique to infinite loop so it continuously plays while you drill with your partner, mirror the video horizontally for left-handed/southpaw execution, and adjust playback speed from 0.5x to 1.5x.',
+      a: 'Our player is custom-engineered for grapplers on the mat. You can set any chapter or technique to infinite loop so it continuously plays while you drill with your partner, mirror the video horizontally for left-handed/southpaw execution, and adjust playback speed from 0.5x to 1.5x.',
     },
     {
       q: 'Can affiliated Rio Grappling Club schools use this for their syllabus?',
@@ -138,7 +138,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Mat-Side Video Player Advantages (Submeta 1-for-1 Value Props) */}
+      {/* Mat-Side Video Player Advantages */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#161619]/60 border-y border-[#2b2b32]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -229,7 +229,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* FAQ Section (Submeta 1-for-1) */}
+      {/* FAQ Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#161619]/40 border-t border-[#2b2b32]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">

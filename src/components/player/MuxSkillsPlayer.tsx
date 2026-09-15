@@ -259,7 +259,7 @@ export const MuxSkillsPlayer: React.FC<MuxSkillsPlayerProps> = ({
         })}
       </div>
 
-      {/* Primary Mat-Side Learning Controls (Submeta-style) */}
+      {/* Primary Mat-Side Learning Controls */}
       <div className="bg-[#161619] p-3 md:p-4 flex flex-col gap-3">
         {/* Active Chapter Info & Timestamp Bar */}
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
@@ -315,7 +315,7 @@ export const MuxSkillsPlayer: React.FC<MuxSkillsPlayerProps> = ({
             </button>
           </div>
 
-          {/* Center / Right: Submeta Mat-Drilling Specialized Controls */}
+          {/* Center / Right: Mat-Drilling Specialized Controls */}
           <div className="flex items-center gap-1.5 md:gap-2">
             {/* Infinite Chapter Looper */}
             <button
