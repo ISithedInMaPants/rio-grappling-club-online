@@ -1,8 +1,18 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { RgcLogo } from '@/components/ui/RgcLogo';
 
 export const Footer: React.FC = () => {
+  const pathname = usePathname();
+
+  // Hide footer on landing and signup page
+  if (pathname === '/') {
+    return null;
+  }
+
   return (
     <footer className="w-full bg-[#0d0d0e] border-t border-[#2b2b32] text-[#9a9aa6] py-12 px-4 sm:px-6 lg:px-8 mt-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">

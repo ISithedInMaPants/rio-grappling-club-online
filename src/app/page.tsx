@@ -4,7 +4,7 @@ import { PortalAuthCard } from '@/components/auth/PortalAuthCard';
 
 export default function HomePage() {
   return (
-    <main className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden bg-[#0d0d0e]">
+    <main className="min-h-screen flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden bg-[#0d0d0e]">
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-[#00923f]/10 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[250px] bg-[#123984]/15 blur-[120px] rounded-full pointer-events-none" />

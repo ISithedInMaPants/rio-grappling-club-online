@@ -29,9 +29,14 @@ import { useAuth } from '@/context/AuthContext';
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const { user, isAuthenticated, signOut } = useAuth();
+  const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Global shortcut for ⌘K / Ctrl+K
   useEffect(() => {
@@ -44,6 +49,11 @@ export const Navbar: React.FC = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // The menu bar must NOT show on landing and signup; only when signed in
+  if (!mounted || !isAuthenticated || pathname === '/') {
+    return null;
+  }
 
   const navLinks = [
     ...(user?.role === 'owner'
