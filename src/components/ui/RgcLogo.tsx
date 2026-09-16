@@ -1,18 +1,34 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
 
 interface RgcLogoProps {
+  href?: string;
   size?: 'sm' | 'md' | 'lg';
   showOnlineBadge?: boolean;
   className?: string;
 }
 
 export const RgcLogo: React.FC<RgcLogoProps> = ({
+  href,
   size = 'md',
   showOnlineBadge = true,
   className = '',
 }) => {
+  const { user, isAuthenticated } = useAuth();
+
+  // Primary page based on role: Academy Owners -> /academy, Students -> /courses
+  const defaultPrimaryHref = isAuthenticated
+    ? user?.role === 'owner'
+      ? '/academy'
+      : '/courses'
+    : '/';
+
+  const targetHref = href ?? defaultPrimaryHref;
+
   const sizeMap = {
     sm: { height: 28, textRgc: 'text-base', badgeText: 'text-[9px] px-1.5 py-0.2' },
     md: { height: 36, textRgc: 'text-xl', badgeText: 'text-[10px] px-2 py-0.5' },
@@ -23,7 +39,7 @@ export const RgcLogo: React.FC<RgcLogoProps> = ({
 
   return (
     <Link
-      href="/"
+      href={targetHref}
       className={`group flex items-center gap-2.5 select-none transition-opacity hover:opacity-90 ${className}`}
     >
       <div className="relative flex items-center justify-center">

@@ -64,13 +64,15 @@ export const Navbar: React.FC = () => {
     { href: '/instructors', label: 'Instructors', icon: Users },
   ];
 
+  const primaryHref = user?.role === 'owner' ? '/academy' : '/courses';
+
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-[#0d0d0e]/95 backdrop-blur-xl border-b border-[#2b2b32]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <RgcLogo size="md" />
+            <RgcLogo size="md" href={primaryHref} />
           </div>
 
           {/* Desktop Navigation Links */}
