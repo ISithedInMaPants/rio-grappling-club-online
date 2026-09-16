@@ -53,6 +53,16 @@ export const Belts: Story = {
   ),
 };
 
+export const SkillLevels: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge level="beginner" />
+      <Badge level="intermediate" />
+      <Badge level="advanced" />
+    </div>
+  ),
+};
+
 export const Formats: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">

@@ -53,6 +53,9 @@ export const QuickSearchModal: React.FC<QuickSearchModalProps> = ({
         (c) =>
           c.title.toLowerCase().includes(cleanQuery) ||
           c.subtitle.toLowerCase().includes(cleanQuery) ||
+          c.level.toLowerCase().includes(cleanQuery) ||
+          (cleanQuery === 'gi' && (c.giFormat === 'gi' || c.giFormat === 'both')) ||
+          ((cleanQuery === 'nogi' || cleanQuery === 'no-gi' || cleanQuery === 'no gi') && (c.giFormat === 'nogi' || c.giFormat === 'both')) ||
           c.tags.some((t) => t.toLowerCase().includes(cleanQuery))
       )
     : mockCourses.slice(0, 3);
@@ -65,6 +68,7 @@ export const QuickSearchModal: React.FC<QuickSearchModalProps> = ({
               ...l,
               courseTitle: c.title,
               courseSlug: c.slug,
+              level: c.level,
               beltLevel: c.beltLevel,
               giFormat: c.giFormat,
             }))
@@ -169,7 +173,8 @@ export const QuickSearchModal: React.FC<QuickSearchModalProps> = ({
                         {course.title}
                       </div>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <Badge beltLevel={course.beltLevel} size="sm" />
+                        <Badge level={course.level} size="sm" />
+                        <Badge giFormat={course.giFormat} size="sm" />
                         <span className="text-[10px] text-[#9a9aa6]">
                           {course.lessonCount} lessons
                         </span>

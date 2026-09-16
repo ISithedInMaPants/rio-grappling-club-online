@@ -61,7 +61,7 @@ export default async function LessonPlayerPage({ params }: LessonPlayerPageProps
           </div>
 
           <div className="flex items-center gap-3">
-            <Badge beltLevel={course.beltLevel} size="sm" />
+            <Badge level={course.level} size="sm" />
             <Badge giFormat={course.giFormat} size="sm" />
           </div>
         </div>

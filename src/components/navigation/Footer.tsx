@@ -42,18 +42,23 @@ export const Footer: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link href="/courses?belt=white" className="hover:text-[#00b54e] transition-colors">
-                White Belt Fundamentals
+              <Link href="/courses?level=beginner" className="hover:text-[#00b54e] transition-colors">
+                Beginner Fundamentals
               </Link>
             </li>
             <li>
-              <Link href="/courses?belt=blue" className="hover:text-[#00b54e] transition-colors">
-                Blue Belt Intermediate
+              <Link href="/courses?level=intermediate" className="hover:text-[#00b54e] transition-colors">
+                Intermediate Systems
+              </Link>
+            </li>
+            <li>
+              <Link href="/courses?level=advanced" className="hover:text-[#00b54e] transition-colors">
+                Advanced Mastery
               </Link>
             </li>
             <li>
               <Link href="/courses?format=nogi" className="hover:text-[#00b54e] transition-colors">
-                No-Gi Submissions
+                No-Gi & Nogi Grappling
               </Link>
             </li>
             <li>

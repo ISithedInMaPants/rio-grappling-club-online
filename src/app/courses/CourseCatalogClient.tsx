@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Course, BeltLevel, GiFormat, PositionCategory } from '@/types';
+import { Course, CourseLevel, GiFormat, PositionCategory } from '@/types';
 import { CourseCard } from '@/components/cards/CourseCard';
 import { CourseFilterBar } from '@/components/navigation/CourseFilterBar';
 import { BookOpen } from 'lucide-react';
@@ -15,11 +15,18 @@ export const CourseCatalogClient: React.FC<CourseCatalogClientProps> = ({
   initialCourses,
 }) => {
   const searchParams = useSearchParams();
-  const initialBelt = (searchParams.get('belt') as BeltLevel) || 'all';
+  const rawLevel = searchParams.get('level');
+  const rawBelt = searchParams.get('belt');
+  
+  // Map old belt param to level if legacy link
+  const initialLevel: CourseLevel | 'all' = 
+    (rawLevel as CourseLevel) || 
+    (rawBelt === 'white' ? 'beginner' : rawBelt === 'blue' || rawBelt === 'purple' ? 'intermediate' : rawBelt === 'brown' || rawBelt === 'black' ? 'advanced' : 'all');
+  
   const initialFormat = (searchParams.get('format') as GiFormat) || 'all';
 
   const [selectedFormat, setSelectedFormat] = useState<GiFormat | 'all'>(initialFormat);
-  const [selectedBelt, setSelectedBelt] = useState<BeltLevel | 'all'>(initialBelt);
+  const [selectedLevel, setSelectedLevel] = useState<CourseLevel | 'all'>(initialLevel);
   const [selectedCategory, setSelectedCategory] = useState<PositionCategory | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -27,14 +34,16 @@ export const CourseCatalogClient: React.FC<CourseCatalogClientProps> = ({
     return initialCourses.filter((course) => {
       // Format match
       if (selectedFormat !== 'all') {
-        if (course.giFormat !== 'both' && course.giFormat !== selectedFormat) {
+        if (selectedFormat === 'both') {
+          if (course.giFormat !== 'both') return false;
+        } else if (course.giFormat !== 'both' && course.giFormat !== selectedFormat) {
           return false;
         }
       }
 
-      // Belt match
-      if (selectedBelt !== 'all') {
-        if (course.beltLevel !== 'all' && course.beltLevel !== selectedBelt) {
+      // Level match (Beginner / Intermediate / Advanced)
+      if (selectedLevel !== 'all') {
+        if (course.level !== 'all' && course.level !== selectedLevel) {
           return false;
         }
       }
@@ -48,23 +57,28 @@ export const CourseCatalogClient: React.FC<CourseCatalogClientProps> = ({
 
       // Search match
       if (searchQuery.trim() !== '') {
-        const query = searchQuery.toLowerCase();
+        const query = searchQuery.toLowerCase().trim();
         const matchesTitle = course.title.toLowerCase().includes(query);
         const matchesSubtitle = course.subtitle.toLowerCase().includes(query);
         const matchesInstructor = course.instructor.name.toLowerCase().includes(query);
         const matchesTags = course.tags.some((t) => t.toLowerCase().includes(query));
-        if (!matchesTitle && !matchesSubtitle && !matchesInstructor && !matchesTags) {
+        const matchesLevel = course.level.toLowerCase().includes(query);
+        const matchesFormat = 
+          (query === 'gi' && (course.giFormat === 'gi' || course.giFormat === 'both')) ||
+          ((query === 'nogi' || query === 'no-gi' || query === 'no gi') && (course.giFormat === 'nogi' || course.giFormat === 'both'));
+
+        if (!matchesTitle && !matchesSubtitle && !matchesInstructor && !matchesTags && !matchesLevel && !matchesFormat) {
           return false;
         }
       }
 
       return true;
     });
-  }, [initialCourses, selectedFormat, selectedBelt, selectedCategory, searchQuery]);
+  }, [initialCourses, selectedFormat, selectedLevel, selectedCategory, searchQuery]);
 
   const handleReset = () => {
     setSelectedFormat('all');
-    setSelectedBelt('all');
+    setSelectedLevel('all');
     setSelectedCategory('all');
     setSearchQuery('');
   };
@@ -80,18 +94,18 @@ export const CourseCatalogClient: React.FC<CourseCatalogClientProps> = ({
           Rio Grappling Club Courses
         </h1>
         <p className="text-xs sm:text-sm text-[#9a9aa6] mt-2 max-w-xl">
-          Browse structured courses, curriculum pathways, and competition blueprints. Filter by belt rank, gi/no-gi format, or positional focus.
+          Browse structured courses, curriculum pathways, and competition blueprints. Graded by Beginner, Intermediate, and Advanced — available in Gi and No-Gi.
         </p>
       </div>
 
       {/* Filter Engine */}
       <CourseFilterBar
         selectedFormat={selectedFormat}
-        selectedBelt={selectedBelt}
+        selectedLevel={selectedLevel}
         selectedCategory={selectedCategory}
         searchQuery={searchQuery}
         onFormatChange={setSelectedFormat}
-        onBeltChange={setSelectedBelt}
+        onLevelChange={setSelectedLevel}
         onCategoryChange={setSelectedCategory}
         onSearchChange={setSearchQuery}
         onResetFilters={handleReset}

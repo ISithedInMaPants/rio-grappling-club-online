@@ -49,16 +49,14 @@ export const courseType = defineType({
       },
     }),
     defineField({
-      name: 'beltLevel',
-      title: 'Belt Progression Level',
+      name: 'level',
+      title: 'Skill Level',
       type: 'string',
       options: {
         list: [
-          { title: 'White Belt (Fundamentals)', value: 'white' },
-          { title: 'Blue Belt', value: 'blue' },
-          { title: 'Purple Belt', value: 'purple' },
-          { title: 'Brown Belt', value: 'brown' },
-          { title: 'Black Belt', value: 'black' },
+          { title: 'Beginner', value: 'beginner' },
+          { title: 'Intermediate', value: 'intermediate' },
+          { title: 'Advanced', value: 'advanced' },
           { title: 'All Levels', value: 'all' },
         ],
       },

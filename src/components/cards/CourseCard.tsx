@@ -41,7 +41,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
-          <Badge beltLevel={course.beltLevel} size="sm" />
+          <Badge level={course.level} size="sm" />
           <Badge giFormat={course.giFormat} size="sm" />
         </div>
 

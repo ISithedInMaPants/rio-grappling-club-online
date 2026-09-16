@@ -46,13 +46,14 @@ export const mockCourses: Course[] = [
     instructor: mockInstructors[0],
     coverImage: '/images/rgc/banner_rgc.png',
     giFormat: 'both',
+    level: 'beginner',
     beltLevel: 'white',
     positionCategory: 'Closed Guard',
     totalDuration: 3960, // 66 mins
     lessonCount: 6,
     featured: true,
     summary: 'Master the fundamental mechanics of posture control, cross collar grips, pendulum sweeps, and armbars from closed guard as taught across Rio Grappling Club academies worldwide.',
-    tags: ['Closed Guard', 'Fundamentals', 'Armbar', 'Sweeps', 'Posture'],
+    tags: ['Closed Guard', 'Beginner', 'Fundamentals', 'Gi', 'No-Gi', 'Nogi', 'Armbar', 'Sweeps', 'Posture'],
     modules: [
       {
         id: 'cgm-mod-1',
@@ -265,14 +266,15 @@ export const mockCourses: Course[] = [
     subtitle: 'Relentless forward pressure, smash passing, and folding guards without leaving space.',
     instructor: mockInstructors[0],
     coverImage: '/images/rgc/header_logo.png',
-    giFormat: 'both',
+    giFormat: 'gi',
+    level: 'intermediate',
     beltLevel: 'blue',
     positionCategory: 'Guard Passing',
     totalDuration: 2860, // ~48 mins
     lessonCount: 4,
     featured: true,
     summary: 'The signature heavy-hip pressure passing system refined by Roberto Atalla over decades of international competition. Shut down dynamic open guards and pass straight into dominant pins.',
-    tags: ['Pressure Passing', 'Smash Pass', 'Carlson Gracie', 'Half Guard Passing', 'Over-Under'],
+    tags: ['Guard Passing', 'Intermediate', 'Gi', 'Pressure Passing', 'Carlson Gracie', 'Smash Pass', 'Over-Under'],
     modules: [
       {
         id: 'ppb-mod-1',
@@ -417,13 +419,14 @@ export const mockCourses: Course[] = [
     instructor: mockInstructors[1],
     coverImage: '/images/rgc/banner_rgc.png',
     giFormat: 'nogi',
+    level: 'intermediate',
     beltLevel: 'purple',
     positionCategory: 'Half Guard',
     totalDuration: 2000, // ~33 mins
     lessonCount: 3,
     featured: false,
     summary: 'Mauro Chueng teaches the complete half guard matrix: winning the underhook battle, transitioning into the dogfight, and recovering from crossface pressure.',
-    tags: ['Half Guard', 'Dogfight', 'Underhook', 'Deep Half', 'No-Gi'],
+    tags: ['Half Guard', 'Intermediate', 'No-Gi', 'Nogi', 'Dogfight', 'Underhook', 'Deep Half'],
     modules: [
       {
         id: 'hgw-mod-1',
@@ -530,13 +533,14 @@ export const mockCourses: Course[] = [
     instructor: mockInstructors[0],
     coverImage: '/images/rgc/site_icon.png',
     giFormat: 'both',
+    level: 'beginner',
     beltLevel: 'white',
     positionCategory: 'Escapes & Pin Defense',
     totalDuration: 1840, // ~31 mins
     lessonCount: 3,
     featured: false,
     summary: 'Never fear getting pinned. Systematic defensive postures and high-percentage recovery paths taught across Rio Grappling Club academies worldwide.',
-    tags: ['Escapes', 'Side Control', 'Mount', 'Defense', 'Survival'],
+    tags: ['Escapes', 'Beginner', 'Fundamentals', 'Gi', 'No-Gi', 'Nogi', 'Side Control', 'Mount', 'Defense', 'Survival'],
     modules: [
       {
         id: 'esc-mod-1',
@@ -643,13 +647,14 @@ export const mockCourses: Course[] = [
     instructor: mockInstructors[2],
     coverImage: '/images/rgc/banner_rgc.png',
     giFormat: 'nogi',
+    level: 'advanced',
     beltLevel: 'brown',
     positionCategory: 'Submissions',
     totalDuration: 2120, // ~35 mins
     lessonCount: 3,
     featured: true,
     summary: 'Comprehensive guide to lower-body submission hunting, foot pummeling, and leg lock defense curated for modern submission grappling competitors.',
-    tags: ['Leg Locks', 'Ashi Garami', 'Heel Hook', 'No-Gi', 'ADCC'],
+    tags: ['Leg Locks', 'Advanced', 'No-Gi', 'Nogi', 'Ashi Garami', 'Heel Hook', 'ADCC'],
     modules: [
       {
         id: 'leg-mod-1',
@@ -756,13 +761,14 @@ export const mockCourses: Course[] = [
     instructor: mockInstructors[1],
     coverImage: '/images/rgc/site_icon.png',
     giFormat: 'both',
+    level: 'beginner',
     beltLevel: 'blue',
     positionCategory: 'Takedowns & Wrestling',
     totalDuration: 1760, // ~29 mins
     lessonCount: 3,
     featured: false,
     summary: 'Score takedowns safely and land directly in dominant passing position without getting caught in guillotines or kimuras.',
-    tags: ['Takedowns', 'Wrestling', 'Single Leg', 'Double Leg', 'Snapdown'],
+    tags: ['Takedowns', 'Beginner', 'Fundamentals', 'Gi', 'No-Gi', 'Nogi', 'Wrestling', 'Single Leg', 'Double Leg', 'Snapdown'],
     modules: [
       {
         id: 'td-mod-1',
@@ -869,13 +875,14 @@ export const mockCourses: Course[] = [
     instructor: mockInstructors[2],
     coverImage: '/images/rgc/banner_rgc.png',
     giFormat: 'nogi',
+    level: 'advanced',
     beltLevel: 'black',
     positionCategory: 'Back Attacks',
     totalDuration: 1950, // ~32 mins
     lessonCount: 3,
     featured: true,
     summary: 'The most dominant position in grappling broken down systematically. Learn the modern arm-trap straight jacket system developed by elite submission hunters.',
-    tags: ['Back Attacks', 'RNC', 'Straight Jacket', 'Hooks', 'Chokes'],
+    tags: ['Back Attacks', 'Advanced', 'No-Gi', 'Nogi', 'RNC', 'Straight Jacket', 'Hooks', 'Chokes'],
     modules: [
       {
         id: 'ba-mod-1',
@@ -982,13 +989,14 @@ export const mockCourses: Course[] = [
     instructor: mockInstructors[1],
     coverImage: '/images/rgc/header_logo.png',
     giFormat: 'gi',
+    level: 'intermediate',
     beltLevel: 'purple',
     positionCategory: 'Open Guard',
     totalDuration: 1890, // ~31 mins
     lessonCount: 3,
     featured: true,
     summary: 'Build an impassable guard. Master hook depth, dynamic frames, and hip tilts to constantly keep top passers defending rather than passing.',
-    tags: ['Open Guard', 'De La Riva', 'Collar Sleeve', 'Retention', 'Inversion'],
+    tags: ['Open Guard', 'Intermediate', 'Gi', 'De La Riva', 'Collar Sleeve', 'Retention', 'Inversion'],
     modules: [
       {
         id: 'og-mod-1',

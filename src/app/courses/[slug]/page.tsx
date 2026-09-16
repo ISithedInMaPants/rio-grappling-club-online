@@ -54,7 +54,7 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
             <div className="lg:col-span-7 space-y-4">
               {/* Badges */}
               <div className="flex flex-wrap items-center gap-2">
-                <Badge beltLevel={course.beltLevel} size="md" />
+                <Badge level={course.level} size="md" />
                 <Badge giFormat={course.giFormat} size="md" />
                 <Badge variant="blue" size="md">
                   {course.positionCategory}

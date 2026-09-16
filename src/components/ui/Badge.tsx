@@ -1,9 +1,10 @@
 import React from 'react';
-import { BeltLevel, GiFormat } from '@/types';
+import { BeltLevel, CourseLevel, GiFormat } from '@/types';
 
 interface BadgeProps {
   children?: React.ReactNode;
-  variant?: 'default' | 'outline' | 'green' | 'blue' | 'gold' | 'belt' | 'format';
+  variant?: 'default' | 'outline' | 'green' | 'blue' | 'gold' | 'belt' | 'format' | 'level';
+  level?: CourseLevel;
   beltLevel?: BeltLevel;
   giFormat?: GiFormat;
   size?: 'sm' | 'md';
@@ -13,6 +14,7 @@ interface BadgeProps {
 export const Badge: React.FC<BadgeProps> = ({
   children,
   variant = 'default',
+  level,
   beltLevel,
   giFormat,
   size = 'sm',
@@ -20,8 +22,34 @@ export const Badge: React.FC<BadgeProps> = ({
 }) => {
   const sizeClasses = size === 'sm' ? 'text-xs px-2 py-0.5' : 'text-xs md:text-sm px-2.5 py-1';
 
+  // Course Skill Level: Beginner / Intermediate / Advanced
+  if (variant === 'level' || level) {
+    const lvl = level || 'all';
+    const levelStyles: Record<CourseLevel, string> = {
+      beginner: 'bg-emerald-950/80 text-emerald-300 border border-emerald-600/50',
+      intermediate: 'bg-blue-950/80 text-blue-300 border border-blue-600/50',
+      advanced: 'bg-amber-950/80 text-amber-300 border border-amber-600/50',
+      all: 'bg-zinc-800 text-zinc-300 border border-zinc-700',
+    };
+
+    const labelMap: Record<CourseLevel, string> = {
+      beginner: 'Beginner',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced',
+      all: 'All Levels',
+    };
+
+    return (
+      <span
+        className={`inline-flex items-center font-semibold rounded tracking-wide uppercase ${sizeClasses} ${levelStyles[lvl]} ${className}`}
+      >
+        {children || labelMap[lvl]}
+      </span>
+    );
+  }
+
   if (variant === 'belt' || beltLevel) {
-    const level = beltLevel || 'all';
+    const bLevel = beltLevel || 'all';
     const beltStyles: Record<BeltLevel, string> = {
       white: 'bg-zinc-800 text-zinc-100 border border-zinc-500/40',
       blue: 'bg-blue-950/80 text-blue-300 border border-blue-600/50',
@@ -42,9 +70,9 @@ export const Badge: React.FC<BadgeProps> = ({
 
     return (
       <span
-        className={`inline-flex items-center font-medium rounded tracking-wide uppercase ${sizeClasses} ${beltStyles[level]} ${className}`}
+        className={`inline-flex items-center font-medium rounded tracking-wide uppercase ${sizeClasses} ${beltStyles[bLevel]} ${className}`}
       >
-        {children || labelMap[level]}
+        {children || labelMap[bLevel]}
       </span>
     );
   }

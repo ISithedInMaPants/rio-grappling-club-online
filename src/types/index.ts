@@ -1,3 +1,4 @@
+export type CourseLevel = 'beginner' | 'intermediate' | 'advanced' | 'all';
 export type BeltLevel = 'white' | 'blue' | 'purple' | 'brown' | 'black' | 'all';
 
 export type PositionCategory = 
@@ -74,7 +75,8 @@ export interface Course {
   instructor: Instructor;
   coverImage: string;
   giFormat: GiFormat;
-  beltLevel: BeltLevel;
+  level: CourseLevel;
+  beltLevel?: BeltLevel;
   positionCategory: PositionCategory;
   totalDuration: number; // in seconds
   lessonCount: number;
