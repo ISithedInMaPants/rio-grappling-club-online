@@ -22,6 +22,7 @@ import {
   Bookmark,
   LogOut,
   LogIn,
+  Building2,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -45,7 +46,9 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { href: '/', label: 'Explore', icon: Compass },
+    ...(user?.role === 'owner'
+      ? [{ href: '/academy', label: 'Academy', icon: Building2 }]
+      : []),
     { href: '/courses', label: 'Courses', icon: BookOpen },
     { href: '/gameplan', label: 'Gameplan', icon: GitBranch },
     { href: '/instructors', label: 'Instructors', icon: Users },
@@ -112,11 +115,12 @@ export const Navbar: React.FC = () => {
                       <span className="text-[11px] font-bold text-[#ededf4]">
                         {user.name}
                       </span>
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-blue-400 flex items-center gap-0.5">
-                        <ShieldCheck className="w-2.5 h-2.5" /> {user.beltLevel.toUpperCase()} • {user.stripes} {user.stripes === 1 ? 'Stripe' : 'Stripes'}
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-[#00b54e] flex items-center gap-0.5">
+                        <ShieldCheck className="w-2.5 h-2.5" />
+                        {user.role === 'owner' ? 'Academy Owner' : user.rankLabel}
                       </span>
                     </div>
-                    <div className="relative w-8 h-8 rounded-full overflow-hidden border border-blue-500 bg-[#0d0d0e]">
+                    <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#00923f]/60 bg-[#0d0d0e]">
                       <Image
                         src={user.avatarUrl || '/images/instructors/student-alex.png'}
                         alt={user.name}
@@ -127,11 +131,11 @@ export const Navbar: React.FC = () => {
                     <ChevronDown className="w-3.5 h-3.5 text-[#6b6b78]" />
                   </button>
 
-                  {/* Student Dropdown Menu */}
+                  {/* Dropdown Menu */}
                   {userDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-72 bg-[#161619] border border-[#2b2b32] rounded-2xl shadow-2xl p-4 z-50 animate-in fade-in zoom-in-95 duration-100">
                       <div className="flex items-center gap-3 pb-3 border-b border-[#2b2b32]">
-                        <div className="relative w-10 h-10 rounded-full overflow-hidden border border-blue-500 bg-[#0d0d0e]">
+                        <div className="relative w-10 h-10 rounded-full overflow-hidden border border-[#00923f]/60 bg-[#0d0d0e]">
                           <Image
                             src={user.avatarUrl || '/images/instructors/student-alex.png'}
                             alt={user.name}
@@ -141,8 +145,8 @@ export const Navbar: React.FC = () => {
                         </div>
                         <div>
                           <div className="text-xs font-bold text-white">{user.name}</div>
-                          <div className="text-[10px] text-blue-400 font-semibold">
-                            {user.beltLevel.toUpperCase()} Belt • {user.stripes} Stripes
+                          <div className="text-[10px] text-[#00b54e] font-semibold">
+                            {user.rankLabel}
                           </div>
                           <div className="text-[9px] text-[#9a9aa6]">
                             {user.academyName}
@@ -150,44 +154,38 @@ export const Navbar: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Mat Time Stats */}
-                      <div className="py-3 border-b border-[#2b2b32] grid grid-cols-2 gap-2 text-center">
-                        <div className="bg-[#212126] p-2 rounded-xl border border-[#2b2b32]/60">
-                          <div className="text-xs font-mono font-bold text-[#00b54e]">
-                            {user.matHours || 0} hrs
+                      {/* Role-Specific Quick Links & Stats */}
+                      <div className="py-3 border-b border-[#2b2b32] space-y-2">
+                        {user.role === 'owner' ? (
+                          <Link
+                            href="/academy"
+                            onClick={() => setUserDropdownOpen(false)}
+                            className="w-full py-2 px-3 rounded-xl bg-[#212126] hover:bg-[#2b2b32] text-xs font-semibold text-[#ededf4] flex items-center justify-between"
+                          >
+                            <span className="flex items-center gap-1.5">
+                              <Building2 className="w-3.5 h-3.5 text-[#00b54e]" />
+                              <span>Academy Dashboard</span>
+                            </span>
+                            <span className="text-[10px] text-[#00b54e]">&rarr;</span>
+                          </Link>
+                        ) : (
+                          <div className="grid grid-cols-2 gap-2 text-center">
+                            <div className="bg-[#212126] p-2 rounded-xl border border-[#2b2b32]/60">
+                              <div className="text-xs font-mono font-bold text-[#00b54e]">
+                                {user.matHours || 0} hrs
+                              </div>
+                              <div className="text-[9px] uppercase tracking-wider text-[#9a9aa6] mt-0.5 flex items-center justify-center gap-1">
+                                <Clock className="w-2.5 h-2.5" /> Mat Time
+                              </div>
+                            </div>
+                            <div className="bg-[#212126] p-2 rounded-xl border border-[#2b2b32]/60">
+                              <div className="text-xs font-mono font-bold text-[#e0b252]">2 Courses</div>
+                              <div className="text-[9px] uppercase tracking-wider text-[#9a9aa6] mt-0.5 flex items-center justify-center gap-1">
+                                <Award className="w-2.5 h-2.5" /> In Progress
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-[9px] uppercase tracking-wider text-[#9a9aa6] mt-0.5 flex items-center justify-center gap-1">
-                            <Clock className="w-2.5 h-2.5" /> Mat Time
-                          </div>
-                        </div>
-                        <div className="bg-[#212126] p-2 rounded-xl border border-[#2b2b32]/60">
-                          <div className="text-xs font-mono font-bold text-[#e0b252]">2 Courses</div>
-                          <div className="text-[9px] uppercase tracking-wider text-[#9a9aa6] mt-0.5 flex items-center justify-center gap-1">
-                            <Award className="w-2.5 h-2.5" /> In Progress
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Active In-Progress Courses */}
-                      <div className="py-2.5 space-y-2">
-                        <div className="text-[10px] uppercase font-bold tracking-wider text-[#6b6b78]">
-                          Active Study Courses
-                        </div>
-                        <Link
-                          href="/courses/closed-guard-mastery"
-                          onClick={() => setUserDropdownOpen(false)}
-                          className="block p-2 rounded-lg bg-[#212126]/60 hover:bg-[#212126] transition-colors"
-                        >
-                          <div className="text-[11px] font-semibold text-[#ededf4] truncate">
-                            Foundations of Closed Guard
-                          </div>
-                          <div className="w-full bg-[#0d0d0e] h-1.5 rounded-full mt-1.5 overflow-hidden">
-                            <div className="bg-[#00923f] h-full w-3/5" />
-                          </div>
-                          <div className="text-[9px] text-[#9a9aa6] text-right mt-1 font-mono">
-                            60% completed
-                          </div>
-                        </Link>
+                        )}
                       </div>
 
                       <div className="pt-2 border-t border-[#2b2b32] space-y-1.5">
@@ -196,7 +194,7 @@ export const Navbar: React.FC = () => {
                           onClick={() => setUserDropdownOpen(false)}
                           className="w-full flex items-center justify-center gap-1.5 py-1 text-xs text-[#00b54e] font-semibold hover:underline"
                         >
-                          <Bookmark className="w-3 h-3" /> View Enrolled Courses
+                          <Bookmark className="w-3 h-3" /> View Curriculum
                         </Link>
                         <button
                           onClick={() => {
